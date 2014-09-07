@@ -1,10 +1,13 @@
 import urllib2
+import csv
 
 print("Welcome to the Yahoo Finance Stock Program!")
 print("Downloading 2 year historical records")
 
+stockname = "GIS"
+
 # Retrieve the webpage as a string
-f = urllib2.urlopen("http://ichart.yahoo.com/table.csv?s=GIS&a=7&b=6&c=2014&d=8&e=6&f=2014&g=d")	
+f = urllib2.urlopen("http://ichart.yahoo.com/table.csv?s=" + stockname + "&a=8&b=6&c=2012&d=8&e=6&f=2014&g=d")	
 s = f.read()
 
 outputTable = []
@@ -41,3 +44,11 @@ for outputRow in outputTable:
 	print("##############")
 	for outputCol in outputRow:
 		print(outputCol)
+
+filename = "stock_" + stockname + ".csv"
+stockFile = open(filename, 'w')
+writer = csv.writer(stockFile)
+for outputRow in outputTable:
+	writer.writerow(outputRow)
+stockFile.close()
+	
